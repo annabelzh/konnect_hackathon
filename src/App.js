@@ -44,14 +44,15 @@ function App() {
   const [twitterCards, setTwitterCards] = useState([]);
   const [cancelled, setCancelled] = useState(false);
   const [cancelRotate, setCancelRotate] = useState(false);
-  const [cards, setCards] = useState({1:{image:null, username:"kimkar", text:"abc", date:"2007-02-20T14:35:54.000Z"}, 2: {image:null, username:"kimkar", text:"efg", date:"2009-02-20T14:35:54.000Z"}});
+  const [cards, setCards] = useState({1:{image:"https://pbs.twimg.com/media/EgkWveqUwAIj0uc?format=jpg&name=360x360", username:"kimkar", text:"abc", date:"2007-02-20T14:35:54.000Z"}, 2: {image:null, username:"kimkar", text:"efg", date:"2009-02-20T14:35:54.000Z"}});
+  const [searchVal, setSearchVal] = useState("");
 
   useEffect(() => {
-    initCards();
+    initCards("pizza");
   }, []);
  
-  const initCards = () => {
-    const fetchedData = get7DayTweets("pizza");
+  const initCards = (str) => {
+    const fetchedData = get7DayTweets(str);
     // newCard.map( card => {
     //   const tmp = {};
     //   tmp["id"] = card["id"];
@@ -119,13 +120,19 @@ function App() {
             return(<Card 
               inline
               key={c}
+              allCards={cards}
+              deleteFeed={() => {
+                  console.log("delete from App");
+                  delete cards[c];
+                  console.log(cards);
+              }}
               card={cards[c]}
             />)
           }
             )}
           {/* {twitterCards.map(c => <Card 
             props={cards}
-            removeFromCardList = {()=>{
+            deleteFeed = {()=>{
               //hi
             }}
           />)} */}
@@ -180,6 +187,7 @@ function App() {
         placeholder="Type your posts here to start cancelling..."        
 
           // value={this.state.value}
+          onChange={(newVal) => setSearchVal(newVal)}
           // onChange={(newValue) => this.setState({ value: newValue })}
           // onRequestSearch={() => doSomethingWith(this.state.value)}
           ></SearchBar>

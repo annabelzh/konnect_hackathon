@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '56.25%', // 16:9
   },
   image: {
-    height:"2px",
-    width: "2px"
+    height:"40px",
+    width: "40px"
   },
   noMedia: {
     height: 0,
@@ -51,15 +51,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function RecipeReviewCard(props) {
-  console.log("gds");
-  console.log(props);
-  console.log("bruh");
   var d = new Date(props.card["date"]);
   // d = d.toString();
   const classes = useStyles();
   
   const deletePost = () => {
-    alert("Are you sure you want to delete this post? Once deleted you may not be able to restore it.");
+    // alert("Are you sure you want to delete this post? Once deleted you may not be able to restore it.");
+    props.deleteFeed();
   }
 
   const ImageCard = (image) => {
@@ -74,7 +72,7 @@ export default function RecipeReviewCard(props) {
       return (
         <CardMedia
           className={classes.media}
-          image={Image}
+          image={props.card["image"]}
           title="Map"
         />
       )
