@@ -55,9 +55,9 @@ export default function RecipeReviewCard(props) {
   // d = d.toString();
   const classes = useStyles();
   
-  const deletePost = () => {
-    // alert("Are you sure you want to delete this post? Once deleted you may not be able to restore it.");
-    props.deleteFeed();
+  const deletePost = (id) => {
+    console.log(id);
+    props.removeFromCardList(id);
   }
 
   const ImageCard = (image) => {
@@ -101,7 +101,7 @@ export default function RecipeReviewCard(props) {
       </CardContent>
       <CardActions disableSpacing>
         <Button size="small" color="primary" startIcon={<DeleteIcon />}
-          onClick={deletePost}>
+          onClick={() => deletePost(props.card["id"])}>
           Delete
         </Button>
         <Button size="small" color="primary" startIcon={<TwitterIcon />}

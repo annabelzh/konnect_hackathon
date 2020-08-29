@@ -38,6 +38,7 @@ const useStyles = makeStyles({
     marginBottom: "20px"
   },
 });
+var tweets = {};
 
 function App() {
   document.title = '#CancelMe!'
@@ -47,26 +48,36 @@ function App() {
   const [cancelled, setCancelled] = useState(false);
   const [cancelRotate, setCancelRotate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [mapping, setMapping] = useState({});
   const [cards, setCards] = useState({1:{image:"https://pbs.twimg.com/media/EgkWveqUwAIj0uc?format=jpg&name=360x360", username:"kimkar", text:"abc", date:"2007-02-20T14:35:54.000Z"}, 2: {image:null, username:"kimkar", text:"efg", date:"2009-02-20T14:35:54.000Z"}});
   const [searchVal, setSearchVal] = useState("");
 
   useEffect(() => {
-    initCards("");
   }, []);
+
 
   const initCards = (keyword) => {
     setLoading(true);
     console.log("loading" + loading);
     console.log("fetching " + keyword)
     callAPI(keyword)
-      .then(data => {
+      .then((data) =>
+      {
         setTwitterCards({});
+        return data;
+      } 
+      )
+      .then(data => {
+        setMapping({});
         const fetchedData = data["data"];
         const newCard = {};
+        let copy = twitterCards;
+        let mapCopy = {}
         for (var tweet in fetchedData) {
           let card = fetchedData[tweet];
           console.log(card)
           const tmp = {};
+          tmp["id"] = card["id"];
           tmp["date"] = card["created_at"];
           tmp["text"] = card["text"];
           tmp["username"] = data["includes"]["users"][0]["username"];
@@ -83,14 +94,19 @@ function App() {
             tmp["image"] = null;
           }
           newCard["id"] = card["id"];
+          mapCopy[card["id"]] = true;
           newCard["data"] = tmp;
-
-          twitterCards[card["id"]] = tmp ;
+          
+          copy[card["id"]] = tmp;
         }
-        setTwitterCards(twitterCards);
+        setMapping(mapCopy);
+        setTwitterCards(copy);
+        tweets = copy;
+        console.log(tweets);
         console.log("not loading" + loading);
         console.log(JSON.stringify(twitterCards));
         setLoading(false);
+        
       }
       )
     // newCard.map( card => {
@@ -114,13 +130,14 @@ function App() {
 
   const updateTweetFetch = (value) => {
     initCards(value);
+    console.log(JSON.stringify(tweets));
   }
 
   const RotateButton = () => {
     // if (cancelRotate === true) {
     return (
       <Button className="wingButton rotate"
-        onClick={() => { alert('clicked') }}
+        onClick={() => { setTwitterCards({}); }}
       >
         <img src={wings} className="wingButtonLogo" alt="logo" />
         <span class="tooltiptext">Click me to delete selected feeds</span>
@@ -141,10 +158,22 @@ function App() {
     //   </Button>
     //   )
     // }
+    }
+  const removeFromCardList = (id) => {
+    console.log(id);
+    let copy = twitterCards;
+    delete copy[id]; 
+    console.log(copy);
+    tweets = copy;
+    setTwitterCards(copy);
+    let mapCopy = mapping;
+    mapCopy[id] = false; 
+    setMapping(mapCopy);
+    setSearchVal(searchVal + " ");
   }
 
   const RenderCards = () => {
-    console.log(JSON.stringify(twitterCards));
+    console.log(JSON.stringify(tweets));
     if (socialMediaOption === 0) {
       return (<div></div>);
 
@@ -175,10 +204,8 @@ function App() {
             key={c}
             card={twitterCards[c]}
             props={twitterCards}
-            removeFromCardList = {()=>{
-              //hi
-            }}
-          />) }
+            removeFromCardList = {removeFromCardList}
+          />)}
 
 
         </div>
@@ -217,7 +244,7 @@ function App() {
         {/* </Paper> */}
 
       </div>
-
+      {console.log("dsa")}
 
       <div className="middle">
         <SearchBar
@@ -237,7 +264,7 @@ function App() {
         <br/>
       </div>
       <div className="middle">
-        <RenderCards />
+      {RenderCards()}
       </div>
       {/* <Facebook /> */}
 
