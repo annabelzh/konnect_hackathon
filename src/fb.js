@@ -126,31 +126,8 @@ export default class Facebook extends Component {
         document.getElementById('feed').innerHTML = output;
     }
 
-    content() {
-
+    showFeed() {
         console.log("CONTENT IS HEREEEEEE");
-        // console.log(FB.api(
-        //     '/108579077594343/feed',
-        //     'GET',
-        //     {},
-        //     function (response) {
-        //         // Insert your code here
-        //         console.log(response);
-        //         let output = '<h3>Latest Posts</h3>';
-        //         for (let i in response.data) {
-        //             if (response.data[i].message) {
-        //                 output += `<div class="well">${response.data[i].message} <span> ${response.data[i].created_time}</span></div>`;
-        //             }
-        //         }
-
-        //         document.getElementById('feed').innerHTML = output;
-        //         // document.getElementById('feed').innerHTML = output;
-        //     }
-        // ));
-        // FB.api('/108579077594343', function (response) {
-        //     console.log(response);
-        // });
-
         window.FB.api(
             '/108579077594343/feed',
             'GET',
@@ -161,14 +138,24 @@ export default class Facebook extends Component {
                 let output = '<h3>Latest Posts</h3>';
                 for (let i in response.data) {
                     if (response.data[i].message) {
-                        output += `<div class="well">${response.data[i].message} <span>${response.data[i].created_time}</span></div>`;
+                        // can remove additional text here it's for debugging
+                        output += `<div class="well">${response.data[i].message} <span> created time: ${response.data[i].created_time}</span><span> id: ${response.data[i].id}</span></div>`;
                     }
                 }
 
                 document.getElementById('feed').innerHTML = output;
-                // document.getElementById('feed').innerHTML = output;
             }
         );
+    }
+
+    deletePost(postId) {
+        window.FB.api(postId, 'delete', function (response) {
+            if (!response || response.error) {
+                alert('Error occured');
+            } else {
+                alert('Post was deleted');
+            }
+        });
     }
 
     render() {
@@ -188,7 +175,7 @@ export default class Facebook extends Component {
                     <img src={this.state.picture} alt={this.state.name} />
                     <h2>Welcome {this.state.name}</h2>
                     Email: {this.state.email}
-                    {this.content()}
+                    {this.showFeed()}
                 </div>
             ) :
             facebookData = (<FacebookLogin
