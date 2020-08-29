@@ -173,7 +173,9 @@ export default class Facebook extends Component {
     getAllPosts() {
         console.log("get all posts");
         console.log(allPosts);
-        // this.deletePost(108579077594343_138201507965433);
+        var OG = "108579077594343_138201507965433";
+        var res = OG.split("_");
+        this.deletePost(res[1]);
     }
 
     deletePost(postId) {
