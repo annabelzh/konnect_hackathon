@@ -9,15 +9,15 @@ export function get7DayTweets(query, username = 'KemKardeshian') {
   getData(`https://api.twitter.com/1.1/search/tweets.json?q=China&lang=en`)
   .then(data => {
       console.log(data); // JSON data parsed by `data.json()` call
+      return data.json();
     });
+
 }
 
 async function getData(url = '') {
   const response = await fetch(url, {
-    method: 'GET', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
+    method: 'GET',
+    mode: 'no-cors',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAANJIDwEAAAAAL32WxvaDMGTNlod7kSr8kKDWxGA%3DGiGhkec0MTcyG7j8hb6mu2uF2wNNkK5Xe8i9rGPpWjyHxxKAnY'
