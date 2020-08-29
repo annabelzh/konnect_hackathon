@@ -4,14 +4,15 @@ import wings from './Images/cancel_me_noew_wings.png';
 import twitter from './Images/twitter.png';
 import facebook from './Images/facebook.png';
 import './App.css';
+import './style.css';
 
 import Button from '@material-ui/core/Button';
 import SearchBar from "material-ui-search-bar";
 import FacebookIcon from '@material-ui/icons/Facebook';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
+// import LinkedInIcon from '@material-ui/icons/LinkedIn';
+// import RedditIcon from '@material-ui/icons/Reddit';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import RedditIcon from '@material-ui/icons/Reddit';
-import Card from './Card';
+import CardList from './CardList';
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -36,6 +37,13 @@ const useStyles = makeStyles({
     marginBottom: "20px"
   },
 });
+
+const cards = [
+  {text: "#cats"},
+  {text: "#nemo"},
+  {text: "#milk"},
+  {text: "#gay"},
+]
 
 function App() {
   document.title = '#CancelMe!'
@@ -90,6 +98,7 @@ function App() {
         }}
         placeholder="Enter your keywords here..."        
         
+
           // value={this.state.value}
           // onChange={(newValue) => this.setState({ value: newValue })}
           // onRequestSearch={() => doSomethingWith(this.state.value)}
@@ -107,25 +116,9 @@ function App() {
         </Button>
         <div>
 
-        {/* <Button 
-          variant="contained" 
-          color="primary"
-          onClick={() => { alert('clicked') }}>
-            #CancelMe! <span role="img" aria-label="angel"> 👼🏼</span>
-        </Button> */}
-        <br/>
-        <TwitterIcon fontSize="large"/>
-        <br/>
-        <Card/><br/>
-        <Card/><br/>
-        <Card/><br/>
-        <Card/><br/>
-        <Card/><br/>
-        <Card/><br/>
-        <Card/><br/>
+        <CardList cards={cards} />
         </div>
 
-      
     </div>
   );
 }
