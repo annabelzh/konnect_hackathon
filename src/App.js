@@ -11,6 +11,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import RedditIcon from '@material-ui/icons/Reddit';
+import Card from './Card';
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -113,19 +114,17 @@ function App() {
             #CancelMe! <span role="img" aria-label="angel"> 👼🏼</span>
         </Button> */}
         <br/>
-        <TwitterIcon/><FacebookIcon/><RedditIcon/><LinkedInIcon/>
+        <TwitterIcon fontSize="large"/>
+        <br/>
+        <Card/><br/>
+        <Card/><br/>
+        <Card/><br/>
+        <Card/><br/>
+        <Card/><br/>
+        <Card/><br/>
+        <Card/><br/>
         </div>
-        {/* <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
+
       
     </div>
   );
