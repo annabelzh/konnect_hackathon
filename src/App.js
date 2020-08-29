@@ -1,5 +1,8 @@
 import React from 'react';
-// import logo from './logo.svg';
+import logo from './Images/logo.png';
+import wings from './Images/cancel_me_noew_wings.png';
+import twitter from './Images/twitter.png';
+import facebook from './Images/facebook.png';
 import './App.css';
 
 import Button from '@material-ui/core/Button';
@@ -9,32 +12,96 @@ import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import RedditIcon from '@material-ui/icons/Reddit';
 
+
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
+
+import FullWidthTabs from "./nav.js";
+
 // function doSomethingWith() {
 //   alert("hi");
 // }
 
+const useStyles = makeStyles({
+  root: {
+    flexGrow: 1,
+    maxWidth: 500,
+    // background: '#13202C',
+    color:'#13202C',
+    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+});
+
 function App() {
   document.title = '#CancelMe!'
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <h1>#CancelMe</h1>
-        
+      <img src={logo} className="App-logo" alt="logo" /> 
+      <div className="middle">
         <SearchBar
+        style={{
+          height: "7vh",
+          width: "40%",
+          marginBottom:"3%",
+          justifyContent: "spaceBetween",
+        }}
+        placeholder="Enter your keywords here..."        
+        
           // value={this.state.value}
           // onChange={(newValue) => this.setState({ value: newValue })}
           // onRequestSearch={() => doSomethingWith(this.state.value)}
-          />
+          ></SearchBar>
         <br/>
-        <Button 
+        </div>
+
+        <div className="middle">
+        {/* <Paper className={classes.root}> */}
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            variant="fullWidth"
+            indicatorColor="primary"
+            textColor="primary"
+            aria-label="icon label tabs example"
+            
+            className={classes.root}> 
+          >
+            <Tab icon={<img src={twitter} className="socialLogo" alt="logo" />} label="Twitter" />
+            <Tab icon={<img src={facebook} className="socialLogo" alt="logo" />} label="Facebook" />
+          </Tabs>
+        {/* </Paper> */}
+
+        </div>
+
+        
+        <Button className="wingButton"
+        onClick={() => { alert('clicked') }}
+        >
+        <img src={wings} className="wingButtonLogo" alt="logo" /> 
+        <span class="tooltiptext">Click me to delete selected feeds</span>
+        
+        </Button>
+        <div>
+
+        {/* <Button 
           variant="contained" 
           color="primary"
           onClick={() => { alert('clicked') }}>
             #CancelMe! <span role="img" aria-label="angel"> 👼🏼</span>
-        </Button>
+        </Button> */}
         <br/>
         <TwitterIcon/><FacebookIcon/><RedditIcon/><LinkedInIcon/>
+        </div>
         {/* <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -46,7 +113,7 @@ function App() {
         >
           Learn React
         </a> */}
-      </header>
+      
     </div>
   );
 }

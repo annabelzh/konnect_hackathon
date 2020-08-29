@@ -1,27 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Lily+Script+One');
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.flexParent{
+  /* flex-direction: column;
+  display: flex;
+  justify-content: center; */
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+.middle {
+    /* flex-direction: column; */
+    position: relative;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchBar {
+  width: 15px;
+}
+
+.innerMiddle {
+  align-self: center;
+}
+.wingButton {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+.wingButtonLogo {
+  width: 25vw;
+}
+/* 
+.wingButton .tooltiptext {
+  visibility: hidden;
+  width: 150px;
+  background-color: #13202C;
+  color: #f5f5f5;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;*/
+  
+  /* Position the tooltip *//*
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+  text-transform: capitalize;
+  
+} */
+
+.wingButton .tooltiptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #13202C;
+  color: #f5f5f5;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 40%;
+  left: 110%;
+  text-transform: capitalize;
+}
+
+.wingButton .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #13202C transparent transparent;
+}
+
+
+.wingButton:hover .tooltiptext {
+  visibility: visible;
+}
+
+.empty {
+  height: 5vh;
+}
+
+.socialLogo {
+  height: 5vh;
+  width: 5vh;
+
+}
+
+.nav {
+  background-color: None;
+  opacity: 0.5l
+}
+
+.App-logo {
+  margin-top: 50px;
+}
+
+/* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+} */
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+ 
 }
 
 .App-link {
