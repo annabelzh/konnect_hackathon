@@ -6,7 +6,7 @@ var router = express.Router();
 router.get("/", function(req, res, next) {
     let query = req.query.keyword;
     const username = 'KemKardeshian';
-    getData(`https://api.twitter.com/2/tweets/search/recent?query=from:${username} ${query}&max_results=100&&expansions=author_id&tweet.fields=author_id,created_at,conversation_id&user.fields=username,name,profile_image_url`)
+    getData(`https://api.twitter.com/2/tweets/search/recent?query=from:${username} ${query}&max_results=100&expansions=author_id,attachments.media_keys&media.fields=duration_ms,height,media_key,preview_image_url,public_metrics,type,url,width&tweet.fields=author_id,created_at,conversation_id&user.fields=username,name,profile_image_url`)
     .then(data => {
         console.log(data);// JSON data parsed by `data.json()` call
         res.send(data);

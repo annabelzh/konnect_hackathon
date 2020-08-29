@@ -68,17 +68,25 @@ function App() {
           tmp["date"] = card["created_at"];
           tmp["text"] = card["text"];
           tmp["username"] = data["includes"]["users"][0]["username"];
+          tmp["profilepic"] = data["includes"]["users"][0]["profile_image_url"];
           try {
-            tmp["image"] = data["includes"]["users"][0]["profile_image_url"];
+            let media_key = card["attachments"]["media_keys"][0];
+            for (let i in data["includes"]["media"]) {
+              if (data["includes"]["media"][i]["media_key"] === media_key) {
+                tmp["image"] = data["includes"]["media"][i]["url"];
+              }
+            }
+            
           } catch (e) {
             tmp["image"] = null;
           }
-          newCard["id"] = tmp;
+          newCard["id"] = card["id"];
+          newCard["data"] = tmp;
 
+          twitterCards[card["id"]] = tmp ;
         }
         console.log("not loading" + loading);
         setLoading(false);
-        twitterCards["id"] = newCard["data"];
       }
       )
     // newCard.map( card => {
@@ -128,6 +136,7 @@ function App() {
   }
 
   const RenderCards = () => {
+    console.log(JSON.stringify(twitterCards));
     if (socialMediaOption === 0) {
       return (<div></div>);
 

@@ -63,18 +63,16 @@ export default function RecipeReviewCard(props) {
   }
 
   const ImageCard = (image) => {
+    console.log(props.card["image"]);
     if (props.card["image"] == null || props.card["image"] === undefined) {
       return (
-        <CardMedia
-          className={classes.noMedia}
-          title="Map"
-        />
+        <></>
       )
     } else {
       return (
         <CardMedia
           className={classes.media}
-          image={Image}
+          image={props.card["image"]}
           title="Map"
         />
       )
@@ -86,7 +84,7 @@ export default function RecipeReviewCard(props) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            <img src={kim} className={classes.image} alt="logo" /> 
+            <img src={props.card["image"]} className={classes.image} alt="logo" /> 
           </Avatar>
         }
         // action={
