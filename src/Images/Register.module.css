@@ -1,0 +1,58 @@
+.wrapper {
+    height: 130vh; 
+    background: linear-gradient(to bottom, white 20%, #101C38 21% 100%);
+    
+}
+
+body {
+    display: initial !important;
+}
+
+.noPadding {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.title {
+    font-size: 50px;
+    color: #101C38;
+    font-family: 'Lily Script One';
+    text-shadow: 4px 2px #fff
+}
+
+.submitButton {
+    text-align: center;
+}
+
+.tabs {
+    width: 100%;
+    justify-content: center;
+}
+
+.loginContainer {
+    position: absolute;
+    top: 42%;
+    background: white;
+    width: 50%;
+    border-radius: 25px;
+    padding: 1.5%;
+    justify-content: center;
+}
+
+.formControl {
+    width: 100%;
+    background-color: #A4DEF9;
+    border: none;
+}
+
+.formLabel {
+    color: #101C38;
+}
+
+.form {
+    text-align: left;
+    width: 100%;
+}
+
+
+

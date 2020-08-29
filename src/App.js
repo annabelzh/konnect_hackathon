@@ -32,6 +32,7 @@ const useStyles = makeStyles({
     // background: '#13202C',
     color:'#13202C',
     // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    marginBottom: "20px"
   },
 });
 
@@ -47,7 +48,38 @@ function App() {
   return (
     <div className="App">
       <img src={logo} className="App-logo" alt="logo" /> 
-      <div className="middle">
+
+      <div className="sub middle">Cancelling the cancel culture</div>
+      
+        <div className="picksosmed">
+        Pick your social media:
+        </div>
+        <div className="middle">
+       
+        {/* <Paper className={classes.root}> */}
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            variant="fullWidth"
+            indicatorColor="primary"
+            textColor="primary"
+            aria-label="icon label tabs example"
+            
+            className={classes.root}> 
+          >
+          
+          <Tab icon={<FacebookIcon style={{ fontSize: 50 }}  />} label="Facebook" />
+          <Tab icon={<TwitterIcon style={{ fontSize: 50 }} />} label="Twitter" />
+
+            {/* <Tab icon={<img src={twitter} className="socialLogo" alt="logo" />} label="Twitter" /> */}
+            {/* <Tab icon={<img src={facebook} className="socialLogo" alt="logo" />} label="Facebook" /> */}
+          </Tabs>
+        {/* </Paper> */}
+
+        </div>
+
+
+        <div className="middle">
         <SearchBar
         style={{
           height: "7vh",
@@ -62,25 +94,6 @@ function App() {
           // onRequestSearch={() => doSomethingWith(this.state.value)}
           ></SearchBar>
         <br/>
-        </div>
-
-        <div className="middle">
-        {/* <Paper className={classes.root}> */}
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            variant="fullWidth"
-            indicatorColor="primary"
-            textColor="primary"
-            aria-label="icon label tabs example"
-            
-            className={classes.root}> 
-          >
-            <Tab icon={<img src={twitter} className="socialLogo" alt="logo" />} label="Twitter" />
-            <Tab icon={<img src={facebook} className="socialLogo" alt="logo" />} label="Facebook" />
-          </Tabs>
-        {/* </Paper> */}
-
         </div>
 
         
