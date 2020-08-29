@@ -13,7 +13,7 @@ export default class Facebook extends Component {
     };
 
     responseFacebook = response => {
-        console.log(response);
+        // console.log(response);
         if (response.status !== 'unknown')
             this.setState({
                 isLoggedIn: true,
@@ -127,14 +127,14 @@ export default class Facebook extends Component {
     }
 
     showFeed() {
-        console.log("CONTENT IS HEREEEEEE");
+        // console.log("CONTENT IS HEREEEEEE");
         window.FB.api(
             '/108579077594343/feed',
             'GET',
             {},
             function (response) {
                 // Insert your code here
-                console.log(response);
+                // console.log(response);
                 let output = '<h3>Latest Posts</h3>';
                 for (let i in response.data) {
                     if (response.data[i].message) {

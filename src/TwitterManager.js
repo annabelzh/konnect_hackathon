@@ -8,12 +8,15 @@ export function get7DayTweets(query, username = 'KemKardeshian') {
   getData(`https://api.twitter.com/2/tweets/search/recent?query=from:${username} ${query}&max_results=10&tweet.fields=author_id,created_at,conversation_id&user.fields=username`)
     .then(data => {
       console.log(data); // JSON data parsed by `data.json()` call
+      return data.json();
     });
+
 }
 
 async function getData(url = '') {
   const response = await fetch(url, {
     method: 'GET',
+    mode: 'no-cors',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAAGTEHAEAAAAAVcGhDXmAclLv6VKg0yJ%2Bi3ZbIfE%3DmpPRoZUCZpBvr645wXRTGdPLh7y1nUpOVYgBnisK5r2gLPcaTa'

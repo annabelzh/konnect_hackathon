@@ -39,13 +39,6 @@ const useStyles = makeStyles({
   },
 });
 
-const cards = {
-  1:{text: "#cats"},
-  2:{text: "#nemo"},
-  3:{text: "#milk"},
-  4:{text: "#gay"}
-}
-
 function App() {
   document.title = '#CancelMe!'
   const classes = useStyles();
@@ -53,25 +46,38 @@ function App() {
   const [twitterCards, setTwitterCards] = useState([]);
   const [cancelled, setCancelled] = useState(false);
   const [cancelRotate, setCancelRotate] = useState(false);
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState({1:{image:null, username:"kimkar", text:"abc", date:"2007-02-20T14:35:54.000Z"}, 2: {image:null, username:"kimkar", text:"efg", date:"2009-02-20T14:35:54.000Z"}});
 
   useEffect(() => {
     initCards();
   }, []);
  
-    const initCards = () => {
-      setCards([
-        {text: "#cats"},
-        {text: "#nemo"},
-        {text: "#milk"},
-        {text: "#gay"},
-      ])
+  const initCards = () => {
+    const fetchedData = get7DayTweets("pizza");
+    // newCard.map( card => {
+    //   const tmp = {};
+    //   tmp["id"] = card["id"];
+    // })
+    const newCard = {};
+    for (var card in fetchedData ) {
+      const tmp = {};
+      tmp["date"] = card["created_at"];
+      tmp["text"] = card["text"];
+      tmp["username"] = card["username"];
+      try {
+        tmp["image"] = card["urls"]["images"][0];
+      } catch(e) {
+        tmp["image"] = null;
+      }
+      newCard["id"] = tmp;
+
     }
+    setTwitterCards(newCard["data"]);
+  }
 
   const handleChange = (event, newValue) => {
     console.log(newValue);
     setSocialMediaOption(newValue);
-    get7DayTweets("pizza");
   };
 
   const RotateButton = () => {
@@ -109,13 +115,22 @@ function App() {
       return (
         <div>
           <RotateButton/>
-          {/* {cards.map(c => <Card/>)} */}
-          {cards.map(c => <Card 
-            text={c.text}
+          {Object.keys(cards).map(c => {
+            console.log("hi");
+            console.log(cards[c]);
+            return(<Card 
+              inline
+              key={c}
+              card={cards[c]}
+            />)
+          }
+            )}
+          {/* {twitterCards.map(c => <Card 
+            props={cards}
             removeFromCardList = {()=>{
               //hi
             }}
-          />)}
+          />)} */}
      
         
         </div>
