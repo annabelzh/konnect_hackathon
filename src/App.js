@@ -1,6 +1,7 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
+import TwitterManager from './TwitterManager.js'
 
 import Button from '@material-ui/core/Button';
 import SearchBar from "material-ui-search-bar";
@@ -15,6 +16,8 @@ import RedditIcon from '@material-ui/icons/Reddit';
 
 function App() {
   document.title = '#CancelMe!'
+  TwitterManager.get7DayTweets("pizza");
+
   return (
     <div className="App">
       <header className="App-header">
