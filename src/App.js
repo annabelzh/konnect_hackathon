@@ -1,8 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import logo from './Images/logo.png';
 import wings from './Images/cancel_me_noew_wings.png';
-import twitter from './Images/twitter.png';
-import facebook from './Images/facebook.png';
 import './App.css';
 import './style.css';
 import Card from "./Card";
@@ -17,8 +15,8 @@ import CardList from './CardList';
 import Rotation from 'react-rotation';
 
 
-import FacebookLogin from 'react-facebook-login';
-import Facebook from './fb'
+// import FacebookLogin from 'react-facebook-login';
+// import Facebook from './fb'
 
 import {get7DayTweets} from './TwitterManager';
 
@@ -190,7 +188,7 @@ function App() {
       <div className="middle">
         <RenderCards/>
       </div>
-      <Facebook />
+      {/* <Facebook /> */}
 
 
         
