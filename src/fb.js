@@ -127,8 +127,8 @@ export default class Facebook extends Component {
     }
 
     showFeed() {
-        console.log("CONTENT IS HEREEEEEE");
-        var allPosts = { "data": [], };
+        // console.log("CONTENT IS HEREEEEEE");
+        var allPosts = { "data": [] };
 
         window.FB.api(
             '/108579077594343/feed',
@@ -136,7 +136,7 @@ export default class Facebook extends Component {
             {},
             function (response) {
                 // Insert your code here
-                console.log(response);
+                // console.log(response);
                 let output = '<h3>Latest Posts</h3>';
                 for (let i in response.data) {
                     if (response.data[i].message) {
@@ -152,16 +152,38 @@ export default class Facebook extends Component {
                 document.getElementById('feed').innerHTML = output;
             }
         );
+
+        // console.log("final");
+        // console.log(allPosts);
+
+        this.getAllPosts(allPosts);
+    }
+
+    // THE FUNCTION THAT SHOULD RETURN THE DATA IN THIS FORMAT
+    // var post = { "author": "Hoogle Bot", 
+    //              "text": response.data[i].message, 
+    //              "created_at": response.data[i].created_time, 
+    //              "id": response.data[i].id 
+    //             };
+    getAllPosts(allPosts) {
+        console.log("get all posts");
+        console.log(allPosts);
+
+        // this.deletePost("108579077594343_138161784636072");
+        return allPosts;
     }
 
     deletePost(postId) {
-        window.FB.api(postId, 'delete', function (response) {
-            if (!response || response.error) {
-                alert('Error occured');
-            } else {
-                alert('Post was deleted');
-            }
-        });
+        console.log("Deleting Post");
+        window.FB.api(postId, '/108579077594343/feed',
+            'DELETE',
+            {}, function (response) {
+                if (!response || response.error) {
+                    alert('Error occured');
+                } else {
+                    alert('Post was deleted');
+                }
+            });
     }
 
     render() {
@@ -185,7 +207,7 @@ export default class Facebook extends Component {
                 </div>
             ) :
             facebookData = (<FacebookLogin
-                appId="956629761469528" // Konnect: 956629761469528, fbid: 106395927814864
+                appId="1258433741178117" // Konnect: 956629761469528, fbid: 106395927814864
                 autoLoad={true}
                 fields="name,picture"
                 onClick={this.componentClicked}
