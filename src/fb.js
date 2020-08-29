@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import FB from 'fb';
 
+var allPosts = { "data": [] };
+var uniqPosts = {};
+
 export default class Facebook extends Component {
 
     state = {
@@ -10,6 +13,7 @@ export default class Facebook extends Component {
         name: '',
         email: '',
         picture: '',
+        allPosts: { "data": [] },
     };
 
     responseFacebook = response => {
@@ -125,9 +129,9 @@ export default class Facebook extends Component {
         document.getElementById('feed').innerHTML = output;
     }
 
-    showFeed() {
+    showFeed = () => {
         // console.log("CONTENT IS HEREEEEEE");
-        var allPosts = { "data": [] };
+        allPosts = { "data": [] };
 
         window.FB.api(
             '/108579077594343/feed',
@@ -138,24 +142,26 @@ export default class Facebook extends Component {
                 // console.log(response);
                 let output = '<h3>Latest Posts</h3>';
                 for (let i in response.data) {
-                    if (response.data[i].message) {
+                    if (response.data[i].message && !(response.data[i].id in uniqPosts)) {
                         // can remove additional text here it's for debugging
 
                         var post = { "author": "Hoogle Bot", "text": response.data[i].message, "created_at": response.data[i].created_time, "id": response.data[i].id };
                         // console.log("post", post);
                         allPosts["data"].push(post);
                         output += `<div class="well">${response.data[i].message} <span> created time: ${response.data[i].created_time}</span><span> id: ${response.data[i].id}</span></div>`;
+                        uniqPosts[response.data[i].id] = 1;
                     }
                 }
 
-                document.getElementById('feed').innerHTML = output;
+                // document.getElementById('feed').innerHTML = output;
             }
         );
 
         // console.log("final");
         // console.log(allPosts);
 
-        this.passAllPosts(allPosts);
+        // this.passAllPosts(allPosts);
+        // return allPosts;
     }
 
     // THE FUNCTION THAT SHOULD RETURN THE DATA IN THIS FORMAT
@@ -164,16 +170,10 @@ export default class Facebook extends Component {
     //              "created_at": response.data[i].created_time, 
     //              "id": response.data[i].id 
     //             };
-    passAllPosts(allPosts) {
+    getAllPosts() {
         console.log("get all posts");
         console.log(allPosts);
-
-        // this.deletePost("108579077594343_138161784636072");
-        return allPosts;
-    }
-
-    getAllPosts() {
-
+        // this.deletePost(108579077594343_138201507965433);
     }
 
     deletePost(postId) {
@@ -205,8 +205,9 @@ export default class Facebook extends Component {
                     }}>
                     <img src={this.state.picture} alt={this.state.name} />
                     <h2>Welcome {this.state.name}</h2>
-                    Email: {this.state.email}
+                    {/* Email: {this.state.email} */}
                     {this.showFeed()}
+                    {this.getAllPosts()}
                 </div>
             ) :
             facebookData = (<FacebookLogin
@@ -220,8 +221,8 @@ export default class Facebook extends Component {
             <>
                 {facebookData}
                 <div class="container">
-                    <h3 id="heading">Log in to view your profile</h3>
-                    <div id="profile">Profile</div>
+                    {/* <h3 id="heading">Log in to view your profile</h3>
+                    <div id="profile">Profile</div> */}
                     <div id="feed">Feed</div>
                 </div>
 
