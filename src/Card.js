@@ -12,6 +12,8 @@ import Button from '@material-ui/core/Button';
 import Image from './Images/map.png';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import logo from './Images/logo.png';
+import kim from './Images/kim.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +25,14 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+  },
+  image: {
+    height:"40px",
+    width: "40px"
+  },
+  noMedia: {
+    height: 0,
+    paddingTop: '0%'
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -41,10 +51,29 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function RecipeReviewCard(props) {
+  var d = new Date(props.card["date"]);
+  // d = d.toString();
   const classes = useStyles();
   
-  const deletePost = () => {
-    alert("Are you sure you want to delete this post? Once deleted you may not be able to restore it.");
+  const deletePost = (id) => {
+    console.log(id);
+    props.removeFromCardList(id);
+  }
+
+  const ImageCard = (image) => {
+    if (props.card["image"] == null || props.card["image"] === undefined) {
+      return (
+        <></>
+      )
+    } else {
+      return (
+        <CardMedia
+          className={classes.media}
+          image={props.card["image"]}
+          title="Map"
+        />
+      )
+    }
   }
 
   return (
@@ -52,7 +81,7 @@ export default function RecipeReviewCard(props) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            K
+            <img src={props.card["profilepic"]} className={classes.image} alt="logo" /> 
           </Avatar>
         }
         // action={
@@ -60,22 +89,19 @@ export default function RecipeReviewCard(props) {
         //     <MoreVertIcon />
         //   </IconButton>
         // }
-        title="@your_account"
-        subheader="September 14, 2010"
+        title={"@" + props.card["username"]}
+        subheader={d.toString().substring(0,24)}
       />
-      <CardMedia
-        className={classes.media}
-        image={Image}
-        title="Map"
-      />
+      {ImageCard(props.card["image"])}
+
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-        This is very offensive content! I love racism, sexism, homophobia and illegal stuff like murdering haha it is very funny I think. {props.text}
+        {props.card["text"]}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <Button size="small" color="primary" startIcon={<DeleteIcon />}
-          onClick={deletePost}>
+          onClick={() => deletePost(props.card["id"])}>
           Delete
         </Button>
         <Button size="small" color="primary" startIcon={<TwitterIcon />}
