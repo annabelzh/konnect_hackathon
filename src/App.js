@@ -16,7 +16,11 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import CardList from './CardList';
 import Rotation from 'react-rotation';
 
-import get7DayTweets from './TwitterManager';
+
+import FacebookLogin from 'react-facebook-login';
+import Facebook from './fb'
+
+import {get7DayTweets} from './TwitterManager';
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -67,10 +71,7 @@ function App() {
   const handleChange = (event, newValue) => {
     console.log(newValue);
     setSocialMediaOption(newValue);
-    get7DayTweets("pizza")
-              .then(res) {
-                console.log(res);
-    }
+    get7DayTweets("pizza");
   };
 
   const RotateButton = () => {
@@ -174,6 +175,7 @@ function App() {
       <div className="middle">
         <RenderCards/>
       </div>
+      <Facebook />
 
 
         
