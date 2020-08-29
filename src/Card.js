@@ -6,10 +6,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 import Image from './images/map.png';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -39,8 +37,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+
+export default function RecipeReviewCard(props) {
   const classes = useStyles();
+  
+  const deletePost = () => {
+    alert("Are you sure you want to delete this post? Once deleted you may not be able to restore it.");
+  }
 
   return (
     <Card className={classes.root}>
@@ -65,14 +68,16 @@ export default function RecipeReviewCard() {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-        This is very offensive content! I love racism, sexism, homophobia and illegal stuff like murdering haha it is very funny I think.
+        This is very offensive content! I love racism, sexism, homophobia and illegal stuff like murdering haha it is very funny I think. {props.text}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <Button size="small" color="primary" startIcon={<DeleteIcon />}>
+        <Button size="small" color="primary" startIcon={<DeleteIcon />}
+          onClick={deletePost}>
           Delete
         </Button>
-        <Button size="small" color="primary" startIcon={<TwitterIcon />}>
+        <Button size="small" color="primary" startIcon={<TwitterIcon />}
+          onClick={() => console.log("hello????")}>
           View Tweet
         </Button>
       </CardActions>
