@@ -31,7 +31,7 @@ export default class Facebook extends Component {
     }
 
     checkLoginState() {
-        FB.getLoginStatus(function (response) {
+        window.FB.getLoginStatus(function (response) {
             this.statusChangeCallback(response);
         });
     }
