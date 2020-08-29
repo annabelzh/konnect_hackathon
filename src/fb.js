@@ -5,6 +5,12 @@ import FB from 'fb';
 var allPosts = { "data": [] };
 var uniqPosts = {};
 
+export const pls = () => {
+    console.log("get all posts");
+    console.log(allPosts);
+    return allPosts;
+}
+
 export default class Facebook extends Component {
 
     state = {
@@ -31,7 +37,7 @@ export default class Facebook extends Component {
 
     componentClicked = () => {
         console.log('Facebook btn clicked');
-        this.checkLoginState();
+        // this.checkLoginState();
     }
 
     checkLoginState() {
@@ -173,9 +179,10 @@ export default class Facebook extends Component {
     getAllPosts() {
         console.log("get all posts");
         console.log(allPosts);
-        var OG = "108579077594343_138201507965433";
-        var res = OG.split("_");
-        this.deletePost(res[1]);
+        return allPosts;
+        // var OG = "108579077594343_138201507965433";
+        // var res = OG.split("_");
+        // this.deletePost(res[1]);
     }
 
     deletePost(postId) {
@@ -213,7 +220,7 @@ export default class Facebook extends Component {
                 </div>
             ) :
             facebookData = (<FacebookLogin
-                appId="956629761469528" // Konnect: 956629761469528, fbid: 106395927814864, other: 1258433741178117
+                appId="1258433741178117" // Konnect: 956629761469528, fbid: 106395927814864, other: 1258433741178117
                 autoLoad={true}
                 fields="name,picture"
                 onClick={this.componentClicked}
