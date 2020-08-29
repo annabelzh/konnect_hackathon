@@ -47,18 +47,20 @@ function App() {
   const [cancelled, setCancelled] = useState(false);
   const [cancelRotate, setCancelRotate] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [cards, setCards] = useState({ 1: { image: null, username: "kimkar", text: "abc", date: "2007-02-20T14:35:54.000Z" }, 2: { image: null, username: "kimkar", text: "efg", date: "2009-02-20T14:35:54.000Z" } });
-
+  const [cards, setCards] = useState({1:{image:"https://pbs.twimg.com/media/EgkWveqUwAIj0uc?format=jpg&name=360x360", username:"kimkar", text:"abc", date:"2007-02-20T14:35:54.000Z"}, 2: {image:null, username:"kimkar", text:"efg", date:"2009-02-20T14:35:54.000Z"}});
+  const [searchVal, setSearchVal] = useState("");
 
   useEffect(() => {
-    initCards();
+    initCards("");
   }, []);
 
-  const initCards = () => {
+  const initCards = (keyword) => {
     setLoading(true);
     console.log("loading" + loading);
-    callAPI()
+    console.log("fetching " + keyword)
+    callAPI(keyword)
       .then(data => {
+        setTwitterCards({});
         const fetchedData = data["data"];
         const newCard = {};
         for (var tweet in fetchedData) {
@@ -85,7 +87,9 @@ function App() {
 
           twitterCards[card["id"]] = tmp ;
         }
+        setTwitterCards(twitterCards);
         console.log("not loading" + loading);
+        console.log(JSON.stringify(twitterCards));
         setLoading(false);
       }
       )
@@ -95,8 +99,8 @@ function App() {
     // })
   }
   
-  const callAPI = async () => {
-    const response = await fetch("http://localhost:9000/testAPI?keyword=pizza")
+  const callAPI = async (keyword = "pizza") => {
+    const response = await fetch("http://localhost:9000/testAPI?keyword=" + keyword)
     return response.json();
     
   }
@@ -107,6 +111,10 @@ function App() {
     setSocialMediaOption(newValue);
     
   };
+
+  const updateTweetFetch = (value) => {
+    initCards(value);
+  }
 
   const RotateButton = () => {
     // if (cancelRotate === true) {
@@ -144,16 +152,23 @@ function App() {
       return (
         <div>
           <RotateButton />
-          {Object.keys(cards).map(c => {
+          { /*
+          Object.keys(cards).map(c => {
             console.log("hi");
             console.log(cards[c]);
             return (<Card
               inline
               key={c}
+              allCards={cards}
+              deleteFeed={() => {
+                  console.log("delete from App");
+                  delete cards[c];
+                  console.log(cards);
+              }}
               card={cards[c]}
-            />)
+            />) 
           }
-          )}
+        ) */}
 
           { loading ? <CircularProgress /> : Object.keys(twitterCards).map(c => <Card 
             inline
@@ -206,19 +221,20 @@ function App() {
 
       <div className="middle">
         <SearchBar
-          style={{
-            height: "7vh",
-            width: "40%",
-            marginBottom: "3%",
-            justifyContent: "spaceBetween",
-          }}
-          placeholder="Type your posts here to start cancelling..."
+        style={{
+          height: "7vh",
+          width: "40%",
+          marginBottom:"3%",
+          justifyContent: "spaceBetween",
+        }}
+        placeholder="Type your posts here to start cancelling..."        
 
-        // value={this.state.value}
-        // onChange={(newValue) => this.setState({ value: newValue })}
-        // onRequestSearch={() => doSomethingWith(this.state.value)}
-        ></SearchBar>
-        <br />
+          // value={this.state.value}
+          onChange={(newVal) => setSearchVal(newVal)}
+          // onChange={(newValue) => this.setState({ value: newValue })}
+          onRequestSearch={() => updateTweetFetch(searchVal)}
+          ></SearchBar>
+        <br/>
       </div>
       <div className="middle">
         <RenderCards />
