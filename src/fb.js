@@ -1,27 +1,48 @@
-function init() {
-    FB.api(
-        '/l214.animaux',
-        { "fields": "fan_count" },
-        function (response) {
-            alert(response.fan_count);
-        }
-    );
+import React, { Component } from 'react';
+import FacebookLogin from 'react-facebook-login';
+
+export default class Facebook extends Component {
+
+    state = {
+        auth: false,
+        name: '',
+        picture: '',
+    };
+
+    responseFacebook = response => {
+        console.log(response);
+        if (response.status !== 'unknown')
+            this.setState({
+                auth: true,
+                name: response.name,
+                picture: response.picture.data.url,
+            });
+    }
+
+    componentClicked = () => {
+        console.log('Facebook btn clicked');
+    }
+
+    render() {
+        let facebookData;
+
+        this.state.auth ?
+            facebookData = (
+                <div>
+                    WOWWOWOWOWOW AMAZE YOU LOGGED IN GGGGGG
+                </div>
+            ) :
+            facebookData = (<FacebookLogin
+                appId="956629761469528" // Konnect
+                autoLoad={true}
+                fields="name,picture"
+                onClick={this.componentClicked}
+                callback={this.responseFacebook} />);
+
+        return (
+            <>
+                {facebookData}
+            </>
+        );
+    }
 }
-
-window.fbAsyncInit = function () {
-    FB.init({
-        appId: 'your-app-id',
-        xfbml: true,
-        version: 'v2.5'
-    });
-
-    init();
-};
-
-(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) { return; }
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
