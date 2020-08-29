@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 
 //only most recent tweets
 
-function get7DayTweets(query, username = 'KemKardeshian') {
+export function get7DayTweets(query, username = 'KemKardeshian') {
   getData(`https://api.twitter.com/2/tweets/search/recent?query=from:${username} ${query}&max_results=10&tweet.fields=author_id,created_at,conversation_id&user.fields=username`)
     .then(data => {
       console.log(data); // JSON data parsed by `data.json()` call

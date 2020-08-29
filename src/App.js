@@ -16,6 +16,8 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import CardList from './CardList';
 import Rotation from 'react-rotation';
 
+import get7DayTweets from './TwitterManager';
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -33,12 +35,12 @@ const useStyles = makeStyles({
   },
 });
 
-const cards = [
-  {text: "#cats"},
-  {text: "#nemo"},
-  {text: "#milk"},
-  {text: "#gay"},
-]
+const cards = {
+  1:{text: "#cats"},
+  2:{text: "#nemo"},
+  3:{text: "#milk"},
+  4:{text: "#gay"}
+}
 
 function App() {
   document.title = '#CancelMe!'
@@ -65,6 +67,10 @@ function App() {
   const handleChange = (event, newValue) => {
     console.log(newValue);
     setSocialMediaOption(newValue);
+    get7DayTweets("pizza")
+              .then(res) {
+                console.log(res);
+    }
   };
 
   const RotateButton = () => {
@@ -103,7 +109,12 @@ function App() {
         <div>
           <RotateButton/>
           {/* {cards.map(c => <Card/>)} */}
-          {cards.map(c => <Card text={c.text}/>)}
+          {cards.map(c => <Card 
+            text={c.text}
+            removeFromCardList = {()=>{
+              //hi
+            }}
+          />)}
      
         
         </div>
