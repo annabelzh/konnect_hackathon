@@ -30,7 +30,7 @@ export default class Facebook extends Component {
         this.checkLoginState();
     }
 
-    checkLoginState = () => {
+    checkLoginState() {
         FB.getLoginStatus(function (response) {
             this.statusChangeCallback(response);
         });
@@ -128,6 +128,8 @@ export default class Facebook extends Component {
 
     showFeed() {
         console.log("CONTENT IS HEREEEEEE");
+        var allPosts = { "data": [], };
+
         window.FB.api(
             '/108579077594343/feed',
             'GET',
@@ -139,6 +141,10 @@ export default class Facebook extends Component {
                 for (let i in response.data) {
                     if (response.data[i].message) {
                         // can remove additional text here it's for debugging
+
+                        var post = { "author": "Hoogle Bot", "text": response.data[i].message, "created_at": response.data[i].created_time, "id": response.data[i].id };
+                        // console.log("post", post);
+                        allPosts["data"].push(post);
                         output += `<div class="well">${response.data[i].message} <span> created time: ${response.data[i].created_time}</span><span> id: ${response.data[i].id}</span></div>`;
                     }
                 }
