@@ -5,21 +5,26 @@ const fetch = require("node-fetch");
 //only most recent tweets
 
 export function get7DayTweets(query, username = 'KemKardeshian') {
-  getData(`https://api.twitter.com/2/tweets/search/recent?query=from:${username} ${query}&max_results=10&tweet.fields=author_id,created_at,conversation_id&user.fields=username`)
-    .then(data => {
+  //getData(`https://api.twitter.com/2/tweets/search/recent?query=from:${username} ${query}&max_results=10&tweet.fields=author_id,created_at,conversation_id&user.fields=username`)
+  getData(`https://api.twitter.com/1.1/search/tweets.json?q=China&lang=en`)
+  .then(data => {
       console.log(data); // JSON data parsed by `data.json()` call
     });
 }
 
 async function getData(url = '') {
   const response = await fetch(url, {
-    method: 'GET',
+    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAAGTEHAEAAAAAVcGhDXmAclLv6VKg0yJ%2Bi3ZbIfE%3DmpPRoZUCZpBvr645wXRTGdPLh7y1nUpOVYgBnisK5r2gLPcaTa'
+      'Authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAANJIDwEAAAAAL32WxvaDMGTNlod7kSr8kKDWxGA%3DGiGhkec0MTcyG7j8hb6mu2uF2wNNkK5Xe8i9rGPpWjyHxxKAnY'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
-  return response.json(); 
+  return response.json(); // parses JSON response into native JavaScript objects
 }
 
 function deleteTweets(id) {

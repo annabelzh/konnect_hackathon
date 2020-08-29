@@ -20,7 +20,7 @@ import Rotation from 'react-rotation';
 import FacebookLogin from 'react-facebook-login';
 import Facebook from './fb'
 
-import {get7DayTweets} from './TwitterManager';
+//import {get7DayTweets} from './TwitterManager';
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -68,10 +68,18 @@ function App() {
       ])
     }
 
+  const callAPI = () => {
+      fetch("http://localhost:9000/testAPI?keyword=pizza")
+          .then(res => {
+            console.log(res.json());
+          })
+
+  }
+
   const handleChange = (event, newValue) => {
     console.log(newValue);
     setSocialMediaOption(newValue);
-    get7DayTweets("pizza");
+    callAPI();
   };
 
   const RotateButton = () => {
