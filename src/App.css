@@ -117,6 +117,14 @@
   letter-spacing: -0.015em;
 }
 
+.bottom-pad {
+  padding-bottom: 15px;
+}
+
+.position-below {
+  position: absolute;
+}
+
 .nav {
   background-color: None;
   opacity: 0.5;

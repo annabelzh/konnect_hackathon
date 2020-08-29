@@ -13,7 +13,8 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 // import RedditIcon from '@material-ui/icons/Reddit';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import CardList from './CardList';
-
+import Chips from './Chips';
+import Search from './Search';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -22,10 +23,6 @@ import Tab from '@material-ui/core/Tab';
 
 
 import FullWidthTabs from "./nav.js";
-
-// function doSomethingWith() {
-//   alert("hi");
-// }
 
 const useStyles = makeStyles({
   root: {
@@ -84,33 +81,44 @@ function App() {
             {/* <Tab icon={<img src={facebook} className="socialLogo" alt="logo" />} label="Facebook" /> */}
           </Tabs>
         {/* </Paper> */}
-
         </div>
+        {/* <div className="picksosmed bottom-pad">
+          Search posts for the following topics:
+        </div> */}
 
 
         <div className="middle">
-        <SearchBar
-        style={{
-          height: "7vh",
-          width: "40%",
-          marginBottom:"3%",
-          justifyContent: "spaceBetween",
-        }}
-        placeholder="Enter your keywords here..."        
-        
-
-          // value={this.state.value}
-          // onChange={(newValue) => this.setState({ value: newValue })}
-          // onRequestSearch={() => doSomethingWith(this.state.value)}
-          ></SearchBar>
-        <br/>
+         <Search/>
+         <div style={{paddingBottom: "10%"}}></div>
+          {/* <SearchBar
+          style={{
+            height: "7vh",
+            width: "40%",
+            marginBottom:"20%",
+            justifyContent: "spaceBetween",
+            // position: 'absolute',
+            // top: 0, left: 0, right: 0, bottom: 0,
+          }}
+          placeholder="Enter your keywords here..."        
+          
+            // value={this.state.value}
+            // onChange={(newValue) => this.setState({ value: newValue })}
+            // onRequestSearch={() => doSomethingWith(this.state.value)}
+            ></SearchBar> */}
+          
+          {/* <br/> */}
+          {/* <div
+            style={{
+              // marginBottom: "10px",
+              background: 'None',
+              position: 'absolute',
+              //left: 0, right: 0, bottom: 0,
+            }}
+          ><Chips/></div> */}
         </div>
 
-        
-        
         <div className="middle">
-
-        <CardList cards={cards} />
+          <CardList cards={cards} />
         </div>
         <Button className="wingButton"
         onClick={() => { alert('clicked') }}
