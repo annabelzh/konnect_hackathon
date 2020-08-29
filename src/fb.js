@@ -31,11 +31,10 @@ export default class Facebook extends Component {
     }
 
     checkLoginState() {
-        FB.getLoginStatus(function (response) {
+        window.FB.getLoginStatus(function (response) {
             this.statusChangeCallback(response);
         });
     }
-
 
     setElements(isLoggedIn) {
         if (isLoggedIn) {
@@ -156,7 +155,7 @@ export default class Facebook extends Component {
         // console.log("final");
         // console.log(allPosts);
 
-        this.getAllPosts(allPosts);
+        this.passAllPosts(allPosts);
     }
 
     // THE FUNCTION THAT SHOULD RETURN THE DATA IN THIS FORMAT
@@ -165,12 +164,16 @@ export default class Facebook extends Component {
     //              "created_at": response.data[i].created_time, 
     //              "id": response.data[i].id 
     //             };
-    getAllPosts(allPosts) {
+    passAllPosts(allPosts) {
         console.log("get all posts");
         console.log(allPosts);
 
         // this.deletePost("108579077594343_138161784636072");
         return allPosts;
+    }
+
+    getAllPosts() {
+
     }
 
     deletePost(postId) {
@@ -207,7 +210,7 @@ export default class Facebook extends Component {
                 </div>
             ) :
             facebookData = (<FacebookLogin
-                appId="1258433741178117" // Konnect: 956629761469528, fbid: 106395927814864
+                appId="956629761469528" // Konnect: 956629761469528, fbid: 106395927814864, other: 1258433741178117
                 autoLoad={true}
                 fields="name,picture"
                 onClick={this.componentClicked}
