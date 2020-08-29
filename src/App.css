@@ -20,6 +20,7 @@
   align-items: center;
 }
 
+
 .searchBar {
   width: 15px;
 }
@@ -89,6 +90,22 @@
 .empty {
   height: 5vh;
 }
+
+
+.rotate {
+  animation: rotate-keyframes 1s;
+ }
+ 
+ @keyframes rotate-keyframes {
+  from {
+   transform: rotate(0deg);
+  }
+ 
+  to {
+   transform: rotate(180deg);
+  }
+ }
+
 
 .socialLogo {
   height: 5vh;

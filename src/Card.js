@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
     textAlign: 'left',
+    marginTop: "15px",
+    marginBottom: "15px"
   },
   media: {
     height: 0,

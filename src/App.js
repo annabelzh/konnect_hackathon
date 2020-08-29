@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
 import logo from './Images/logo.png';
 import wings from './Images/cancel_me_noew_wings.png';
 import twitter from './Images/twitter.png';
 import facebook from './Images/facebook.png';
 import './App.css';
 import './style.css';
+import Card from "./Card";
 
 import Button from '@material-ui/core/Button';
 import SearchBar from "material-ui-search-bar";
@@ -13,19 +14,13 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 // import RedditIcon from '@material-ui/icons/Reddit';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import CardList from './CardList';
+import Rotation from 'react-rotation';
 
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
-
-import FullWidthTabs from "./nav.js";
-
-// function doSomethingWith() {
-//   alert("hi");
-// }
 
 const useStyles = makeStyles({
   root: {
@@ -48,47 +43,108 @@ const cards = [
 function App() {
   document.title = '#CancelMe!'
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [socialMediaOption, setSocialMediaOption] = React.useState(0);
+  const [twitterCards, setTwitterCards] = useState([]);
+  const [cancelled, setCancelled] = useState(false);
+  const [cancelRotate, setCancelRotate] = useState(false);
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    initCards();
+  }, []);
+ 
+    const initCards = () => {
+      setCards([
+        {text: "#cats"},
+        {text: "#nemo"},
+        {text: "#milk"},
+        {text: "#gay"},
+      ])
+    }
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    console.log(newValue);
+    setSocialMediaOption(newValue);
   };
+
+  const RotateButton = () => {
+    // if (cancelRotate === true) {
+      return(
+        <Button className="wingButton rotate"
+          onClick={() => { alert('clicked') }}
+        >
+        <img src={wings} className="wingButtonLogo" alt="logo" /> 
+        <span class="tooltiptext">Click me to delete selected feeds</span>
+      
+        </Button>
+      )
+    // } else {
+    //   return(
+    //   <Button className="wingButton"
+    //     onClick={() => {
+    //       alert('clicked')
+    //       setCancelRotate(true);
+    //     }}
+    //     >
+    //     <img src={wings} className="wingButtonLogo" alt="logo" /> 
+    //     <span className="tooltiptext">Click me to delete selected feeds</span>
+        
+    //   </Button>
+    //   )
+    // }
+  }
+
+  const RenderCards = () => {
+    if (socialMediaOption === 0) {
+      return (<div></div>);
+
+    } else if (socialMediaOption === 1) {
+      return (
+        <div>
+          <RotateButton/>
+          {/* {cards.map(c => <Card/>)} */}
+          {cards.map(c => <Card text={c.text}/>)}
+     
+        
+        </div>
+      );
+    }
+    return (
+      <div></div>
+    );
+  }
 
   return (
     <div className="App">
       <img src={logo} className="App-logo" alt="logo" /> 
 
-      <div className="sub middle">Cancelling the cancel culture</div>
+      <div className="sub middle">Cancelling the Cancel Culture</div>
       
-        <div className="picksosmed">
+      <div className="picksosmed">
         Pick your social media:
-        </div>
-        <div className="middle">
+      </div>
+      <div className="middle">
        
         {/* <Paper className={classes.root}> */}
           <Tabs
-            value={value}
+            value={socialMediaOption}
             onChange={handleChange}
             variant="fullWidth"
             indicatorColor="primary"
             textColor="primary"
             aria-label="icon label tabs example"
-            
-            className={classes.root}> 
+            className={classes.root}
           >
           
           <Tab icon={<FacebookIcon style={{ fontSize: 50 }}  />} label="Facebook" />
           <Tab icon={<TwitterIcon style={{ fontSize: 50 }} />} label="Twitter" />
-
-            {/* <Tab icon={<img src={twitter} className="socialLogo" alt="logo" />} label="Twitter" /> */}
-            {/* <Tab icon={<img src={facebook} className="socialLogo" alt="logo" />} label="Facebook" /> */}
           </Tabs>
         {/* </Paper> */}
 
-        </div>
+      </div>
 
 
-        <div className="middle">
+      <div className="middle">
         <SearchBar
         style={{
           height: "7vh",
@@ -96,29 +152,23 @@ function App() {
           marginBottom:"3%",
           justifyContent: "spaceBetween",
         }}
-        placeholder="Enter your keywords here..."        
-        
+        placeholder="Type your posts here to start cancelling..."        
 
           // value={this.state.value}
           // onChange={(newValue) => this.setState({ value: newValue })}
           // onRequestSearch={() => doSomethingWith(this.state.value)}
           ></SearchBar>
         <br/>
-        </div>
+      </div>
+      <div className="middle">
+        <RenderCards/>
+      </div>
+
 
         
         
-        <div className="middle">
-
-        <CardList cards={cards} />
-        </div>
-        <Button className="wingButton"
-        onClick={() => { alert('clicked') }}
-        >
-        <img src={wings} className="wingButtonLogo" alt="logo" /> 
-        <span class="tooltiptext">Click me to delete selected feeds</span>
         
-        </Button>
+        
     </div>
   );
 }
