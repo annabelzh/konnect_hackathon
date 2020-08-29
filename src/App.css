@@ -103,6 +103,7 @@
   flex-direction: row;
   align-items:center;
   margin-bottom: 5vh;
+  text-shadow: 4px 2px #f0f0f0;
 }
 
 .picksosmed {

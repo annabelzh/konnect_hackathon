@@ -9,7 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
-import Image from './images/map.png';
+import Image from './Images/map.png';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TwitterIcon from '@material-ui/icons/Twitter';
 

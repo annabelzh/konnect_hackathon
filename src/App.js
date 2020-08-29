@@ -107,6 +107,11 @@ function App() {
         </div>
 
         
+        
+        <div className="middle">
+
+        <CardList cards={cards} />
+        </div>
         <Button className="wingButton"
         onClick={() => { alert('clicked') }}
         >
@@ -114,11 +119,6 @@ function App() {
         <span class="tooltiptext">Click me to delete selected feeds</span>
         
         </Button>
-        <div>
-
-        <CardList cards={cards} />
-        </div>
-
     </div>
   );
 }
