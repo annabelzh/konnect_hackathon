@@ -8,6 +8,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import RedditIcon from '@material-ui/icons/Reddit';
+import Card from './Card';
 
 // function doSomethingWith() {
 //   alert("hi");
@@ -34,10 +35,17 @@ function App() {
             #CancelMe! <span role="img" aria-label="angel"> 👼🏼</span>
         </Button>
         <br/>
-        <TwitterIcon/><FacebookIcon/><RedditIcon/><LinkedInIcon/>
-        {/* <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+        <TwitterIcon fontSize="large"/>
+        {/* <FacebookIcon/><RedditIcon/><LinkedInIcon/> */}
+        <br/>
+        <Card/><br/>
+        <Card/><br/>
+        <Card/><br/>
+        <Card/><br/>
+        <Card/><br/>
+        <Card/><br/>
+        <Card/><br/>
+        {/* 
         <a
           className="App-link"
           href="https://reactjs.org"
