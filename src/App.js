@@ -72,7 +72,7 @@ function App() {
                     // console.log(card)
                     const tmp = {};
                     tmp["date"] = card["created_at"];
-                    console.log(tmp);
+                    // console.log(tmp);
                     tmp["text"] = card["text"];
                     tmp["username"] = data["includes"]["users"][0]["username"];
                     tmp["profilepic"] = data["includes"]["users"][0]["profile_image_url"];
@@ -109,16 +109,10 @@ function App() {
         console.log("loading" + loading);
         console.log("fetching " + keyword);
 
-        // var facebookShow = showFeed();
-        // var facebookData = pls();
-
         console.log("FAcebook data");
         console.log(facebookPostList);
 
-        // callAPI(keyword)
-        //     .then(data => {
         setFacebookCards({});
-        //         const fetchedData = data["data"];
         const newCard = {};
         for (let i = 0; i < facebookPostList.length; i++) {
             console.log(facebookPostList[i]);
@@ -126,7 +120,7 @@ function App() {
             // console.log(card)
             const tmp = {};
             tmp["date"] = card["created_at"];
-            console.log("facebook date", tmp);
+            // console.log("facebook date", tmp);
             tmp["text"] = card["text"];
             tmp["username"] = card["author_name"];
             tmp["profilepic"] = "https://scontent-mia3-1.cdninstagram.com/v/t51.2885-19/s320x320/109136688_610125179899980_1868015297406610141_n.jpg?_nc_ht=scontent-mia3-1.cdninstagram.com&_nc_ohc=s-a2L5jlbl8AX_IqEaO&oh=f49e39c741fa2880cd09f8d4cca3b850&oe=5F73FFDA";
