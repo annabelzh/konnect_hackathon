@@ -23,6 +23,7 @@ export default class Facebook extends Component {
     };
 
     responseFacebook = response => {
+        console.log("response");
         console.log(response);
         if (response.status !== 'unknown')
             this.setState({
@@ -104,35 +105,6 @@ export default class Facebook extends Component {
         //         console.log(response);
         //     }
         // );
-    }
-
-    buildProfile(user) {
-        let profile = `
-          <h3>${user.name}</h3>
-          <ul class="list-group">
-            <li class="list-group-item">User ID: ${user.id}</li>
-            <li class="list-group-item">Email: ${user.email}</li>
-            <li class="list-group-item">Birthday: ${user.birthday}</li>
-            <li class="list-group-item">User ID: ${user.location.name}</li>
-          </ul>
-        `;
-
-        document.getElementById('profile').innerHTML = profile;
-    }
-
-    buildFeed(feed) {
-        let output = '<h3>Latest Posts</h3>';
-        for (let i in feed.data) {
-            if (feed.data[i].message) {
-                output += `
-              <div class="well">
-                ${feed.data[i].message} <span>${feed.data[i].created_time}</span>
-              </div>
-            `;
-            }
-        }
-
-        document.getElementById('feed').innerHTML = output;
     }
 
     showFeed = () => {
@@ -220,20 +192,16 @@ export default class Facebook extends Component {
                 </div>
             ) :
             facebookData = (<FacebookLogin
-                appId="1258433741178117" // Konnect: 956629761469528, fbid: 106395927814864, other: 1258433741178117
+                appId="956629761469528" // Konnect: 956629761469528, fbid: 106395927814864, other: 1258433741178117
                 autoLoad={true}
                 fields="name,picture"
                 onClick={this.componentClicked}
-                callback={this.responseFacebook} />);
+            // callback={this.responseFacebook}
+            />);
 
         return (
             <>
                 {facebookData}
-                <div class="container">
-                    {/* <h3 id="heading">Log in to view your profile</h3>
-                    <div id="profile">Profile</div> */}
-                    <div id="feed">Feed</div>
-                </div>
 
                 {/* <script>
                     window.fbAsyncInit = function() {

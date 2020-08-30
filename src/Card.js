@@ -12,104 +12,106 @@ import Button from '@material-ui/core/Button';
 import Image from './Images/map.png';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+
 import logo from './Images/logo.png';
 import kim from './Images/kim.jpg';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-    textAlign: 'left',
-    marginTop: "15px",
-    marginBottom: "15px"
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  image: {
-    height:"40px",
-    width: "40px"
-  },
-  noMedia: {
-    height: 0,
-    paddingTop: '0%'
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
+    root: {
+        maxWidth: 345,
+        textAlign: 'left',
+        marginTop: "15px",
+        marginBottom: "15px"
+    },
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    },
+    image: {
+        height: "40px",
+        width: "40px"
+    },
+    noMedia: {
+        height: 0,
+        paddingTop: '0%'
+    },
+    expand: {
+        transform: 'rotate(0deg)',
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+    },
+    expandOpen: {
+        transform: 'rotate(180deg)',
+    },
+    avatar: {
+        backgroundColor: red[500],
+    },
 }));
 
 
 export default function RecipeReviewCard(props) {
-  var d = new Date(props.card["date"]);
-  // d = d.toString();
-  const classes = useStyles();
-  
-  const deletePost = () => {
-    // alert("Are you sure you want to delete this post? Once deleted you may not be able to restore it.");
-    props.deleteFeed();
-  }
+    var d = new Date(props.card["date"]);
+    // d = d.toString();
+    const classes = useStyles();
 
-  const ImageCard = (image) => {
-    if (props.card["image"] == null || props.card["image"] === undefined) {
-      return (
-        <></>
-      )
-    } else {
-      return (
-        <CardMedia
-          className={classes.media}
-          image={props.card["image"]}
-          title="Map"
-        />
-      )
+    const deletePost = () => {
+        // alert("Are you sure you want to delete this post? Once deleted you may not be able to restore it.");
+        props.deleteFeed();
     }
-  }
 
-  return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            <img src={props.card["profilepic"]} className={classes.image} alt="logo" /> 
-          </Avatar>
+    const ImageCard = (image) => {
+        if (props.card["image"] == null || props.card["image"] === undefined) {
+            return (
+                <></>
+            )
+        } else {
+            return (
+                <CardMedia
+                    className={classes.media}
+                    image={props.card["image"]}
+                    title="Map"
+                />
+            )
         }
-        // action={
-        //   <IconButton aria-label="settings">
-        //     <MoreVertIcon />
-        //   </IconButton>
-        // }
-        title={"@" + props.card["username"]}
-        subheader={d.toString().substring(0,24)}
-      />
-      {ImageCard(props.card["image"])}
+    }
 
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-        {props.card["text"]}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <Button size="small" color="primary" startIcon={<DeleteIcon />}
-          onClick={deletePost}>
-          Delete
+    return (
+        <Card className={classes.root}>
+            <CardHeader
+                avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                        <img src={props.card["profilepic"]} className={classes.image} alt="logo" />
+                    </Avatar>
+                }
+                // action={
+                //   <IconButton aria-label="settings">
+                //     <MoreVertIcon />
+                //   </IconButton>
+                // }
+                title={"@" + props.card["username"]}
+                subheader={d.toString().substring(0, 24)}
+            />
+            {ImageCard(props.card["image"])}
+
+            <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    {props.card["text"]}
+                </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+                <Button size="small" color="primary" startIcon={<DeleteIcon />}
+                    onClick={deletePost}>
+                    Delete
         </Button>
-        <Button size="small" color="primary" startIcon={<TwitterIcon />}
-          onClick={() => console.log("hello????")}>
-          View Tweet
+                <Button size="small" color="primary" startIcon={<VisibilityIcon />}
+                    onClick={() => console.log("hello????")}>
+                    View Post
         </Button>
-      </CardActions>
-    </Card>
-    
-  );
+            </CardActions>
+        </Card>
+
+    );
 }

@@ -17,6 +17,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 import Facebook from './fb.js';
+import FB from 'fb';
 // import { pls, showFeed } from './fb.js';
 
 //import {get7DayTweets} from './TwitterManager';
@@ -25,6 +26,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+
+import FacebookData from './facebookdata.json';
+const facebookPostList = FacebookData.data;
 
 const useStyles = makeStyles({
     root: {
@@ -68,6 +72,7 @@ function App() {
                     // console.log(card)
                     const tmp = {};
                     tmp["date"] = card["created_at"];
+                    console.log(tmp);
                     tmp["text"] = card["text"];
                     tmp["username"] = data["includes"]["users"][0]["username"];
                     tmp["profilepic"] = data["includes"]["users"][0]["profile_image_url"];
@@ -101,53 +106,53 @@ function App() {
 
     const facebookInitCards = (keyword) => {
         setLoading(true);
-        // console.log("loading" + loading);
-        // console.log("fetching " + keyword);
+        console.log("loading" + loading);
+        console.log("fetching " + keyword);
 
         // var facebookShow = showFeed();
         // var facebookData = pls();
 
-        // console.log("FAcebook data");
-        // console.log(facebookData);
+        console.log("FAcebook data");
+        console.log(facebookPostList);
 
         // callAPI(keyword)
         //     .then(data => {
-        //         setTwitterCards({});
+        setFacebookCards({});
         //         const fetchedData = data["data"];
-        //         const newCard = {};
-        //         for (var tweet in fetchedData) {
-        //             let card = fetchedData[tweet];
-        //             // console.log(card)
-        //             const tmp = {};
-        //             tmp["date"] = card["created_at"];
-        //             tmp["text"] = card["text"];
-        //             tmp["username"] = data["includes"]["users"][0]["username"];
-        //             tmp["profilepic"] = data["includes"]["users"][0]["profile_image_url"];
-        //             try {
-        //                 let media_key = card["attachments"]["media_keys"][0];
-        //                 for (let i in data["includes"]["media"]) {
-        //                     if (data["includes"]["media"][i]["media_key"] === media_key) {
-        //                         tmp["image"] = data["includes"]["media"][i]["url"];
-        //                     }
-        //                 }
+        const newCard = {};
+        for (let i = 0; i < facebookPostList.length; i++) {
+            console.log(facebookPostList[i]);
+            let card = facebookPostList[i];
+            // console.log(card)
+            const tmp = {};
+            tmp["date"] = card["created_at"];
+            console.log("facebook date", tmp);
+            tmp["text"] = card["text"];
+            tmp["username"] = card["author_name"];
+            tmp["profilepic"] = "https://scontent-mia3-1.cdninstagram.com/v/t51.2885-19/s320x320/109136688_610125179899980_1868015297406610141_n.jpg?_nc_ht=scontent-mia3-1.cdninstagram.com&_nc_ohc=s-a2L5jlbl8AX_IqEaO&oh=f49e39c741fa2880cd09f8d4cca3b850&oe=5F73FFDA";
+            // try {
+            //     let media_key = card["attachments"]["media_keys"][0];
+            //     for (let i in data["includes"]["media"]) {
+            //         if (data["includes"]["media"][i]["media_key"] === media_key) {
+            //             tmp["image"] = data["includes"]["media"][i]["url"];
+            //         }
+            //     }
 
-        //             } catch (e) {
-        //                 tmp["image"] = null;
-        //             }
-        //             newCard["id"] = card["id"];
-        //             newCard["data"] = tmp;
+            // } catch (e) {
+            //     tmp["image"] = null;
+            // }
+            newCard["id"] = card["id"];
+            newCard["data"] = tmp;
 
-        //             twitterCards[card["id"]] = tmp;
-        //         }
-        //         setTwitterCards(twitterCards);
-        //         console.log("not loading" + loading);
-        //         // console.log(JSON.stringify(twitterCards));
-        //         setLoading(false);
-        //     }
-        //     )
-        // newCard.map( card => {
-        //   const tmp = {};
-        //   tmp["id"] = card["id"];
+            facebookCards[card["id"]] = tmp;
+        }
+        setFacebookCards(facebookCards);
+        console.log("not loading" + loading);
+        console.log(JSON.stringify(facebookCards));
+        setLoading(false);
+        // newCard.map(card => {
+        //     const tmp = {};
+        //     tmp["id"] = card["id"];
         // })
     }
 
@@ -200,14 +205,14 @@ function App() {
     }
 
     const RenderCards = () => {
-        console.log(JSON.stringify(twitterCards));
+        console.log(JSON.stringify(facebookCards));
         if (socialMediaOption === 0) {
             return (<div><Facebook />
-                {loading ? <CircularProgress /> : Object.keys(twitterCards).map(c => <Card
+                {loading ? <CircularProgress /> : Object.keys(facebookCards).map(c => <Card
                     inline
                     key={c}
-                    card={twitterCards[c]}
-                    props={twitterCards}
+                    card={facebookCards[c]}
+                    props={facebookCards}
                     removeFromCardList={() => {
                         //hi
                     }}
