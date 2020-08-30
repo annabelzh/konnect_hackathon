@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import FB from 'fb';
+import Card from "./Card";
 
 var allPosts = { "data": [] };
 var uniqPosts = {};
+var facebookCards = {};
 
 export const pls = () => {
     console.log("get all posts");
@@ -41,6 +43,18 @@ export default class Facebook extends Component {
         // this.checkLoginState();
     }
 
+    statusChangeCallback(response) {
+        if (response.status === 'connected') {
+            console.log('Logged in and authenticated');
+            this.setElements(true);
+            console.log("connected");
+            this.testAPI();
+        } else {
+            console.log('Not authenticated');
+            this.setElements(false);
+        }
+    }
+
     checkLoginState() {
         window.FB.getLoginStatus(function (response) {
             this.statusChangeCallback(response);
@@ -63,17 +77,7 @@ export default class Facebook extends Component {
         }
     }
 
-    statusChangeCallback(response) {
-        if (response.status === 'connected') {
-            console.log('Logged in and authenticated');
-            this.setElements(true);
-            console.log("connected");
-            this.testAPI();
-        } else {
-            console.log('Not authenticated');
-            this.setElements(false);
-        }
-    }
+
 
     testAPI() {
         console.log('Welcome!  Fetching your information.... ');
@@ -108,7 +112,7 @@ export default class Facebook extends Component {
     }
 
     showFeed = () => {
-        // console.log("CONTENT IS HEREEEEEE");
+        console.log("CONTENT IS HEREEEEEE");
         allPosts = { "data": [] };
 
         window.FB.api(
@@ -119,9 +123,26 @@ export default class Facebook extends Component {
                 // Insert your code here
                 // console.log(response);
                 let output = '<h3>Latest Posts</h3>';
+                let newCard = {};
+                let copy = facebookCards;
                 for (let i in response.data) {
                     if (response.data[i].message && !(response.data[i].id in uniqPosts)) {
                         // can remove additional text here it's for debugging
+                        console.log(response)
+
+                        let card = response.data[i];
+                        console.log(card)
+                        const tmp = {};
+                        tmp["id"] = card["id"];
+                        tmp["date"] = card["created_time"];
+                        tmp["text"] = card["message"];
+                        tmp["username"] = "Hoogle Bot";
+                        tmp["profilepic"] = null;
+                        tmp["image"] = null;
+
+                        newCard["id"] = card["id"];
+                        newCard["data"] = tmp;
+                        copy[card["id"]] = tmp;
 
                         var post = { "author": "Hoogle Bot", "text": response.data[i].message, "created_at": response.data[i].created_time, "id": response.data[i].id };
                         // console.log("post", post);
@@ -130,10 +151,22 @@ export default class Facebook extends Component {
                         uniqPosts[response.data[i].id] = 1;
                     }
                 }
+                facebookCards = copy;
 
-                // document.getElementById('feed').innerHTML = output;
+                //document.getElementById('feed').innerHTML = output;
             }
         );
+
+        return (
+            Object.keys(facebookCards).map(c =>
+                <Card
+                    inline
+                    key={c}
+                    card={facebookCards[c]}
+                    props={facebookCards}
+                    removeFromCardList={() => undefined}
+                />)
+        )
 
         // console.log("final");
         // console.log(allPosts);
@@ -163,9 +196,9 @@ export default class Facebook extends Component {
             'DELETE',
             {}, function (response) {
                 if (!response || response.error) {
-                    alert('Error occured');
+                    console.log("An error occured");
                 } else {
-                    alert('Post was deleted');
+                    console.log('Post was deleted');
                 }
             });
     }
@@ -184,10 +217,21 @@ export default class Facebook extends Component {
                         padding: "20px",
                         color: 'black',
                     }}>
+                    {this.showFeed()}
+
+                    {console.log(facebookCards)}
+                    {Object.keys(facebookCards).map(c =>
+
+                        <Card
+                            inline
+                            key={c}
+                            card={facebookCards[c]}
+                            props={facebookCards}
+                            removeFromCardList={() => undefined}
+                        />)}
                     <img src={this.state.picture} alt={this.state.name} />
                     <h2>Welcome {this.state.name}</h2>
                     {/* Email: {this.state.email} */}
-                    {this.showFeed()}
                     {this.getAllPosts()}
                 </div>
             ) :
@@ -202,18 +246,6 @@ export default class Facebook extends Component {
         return (
             <>
                 {facebookData}
-
-                {/* <script>
-                    window.fbAsyncInit = function() {
-                        FB.init({
-                            appId: '956629761469528',
-                            autoLogAppEvents: true,
-                            xfbml: true,
-                            version: 'v8.0'
-                        })
-                    }
-                </script>
-                <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script> */}
             </>
         );
     }
