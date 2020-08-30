@@ -94,8 +94,50 @@
 
 .rotate {
   animation: rotate-keyframes 1s;
+  /* transition: 1s; */
+  /* left: 0; */
  }
- 
+
+ /* .slide {
+  transition: 1s;
+  left: 0;
+ } */
+
+ /* .slideCon {
+
+  position:relative;
+ }
+ .slide {
+ position:absolute;
+ padding:1em; 
+ margin:.5em;
+ height:3em;
+ outline:1px solid; width:200px;
+ height:auto;
+ transition: all 1s;
+ } */
+
+
+.slide {
+  bottom: 15%;
+  display: block;
+  position: absolute;
+  animation: linear infinite alternate;
+  animation-name: run;
+  animation-duration: 2s;
+}
+
+@-webkit-keyframes run {
+    0% {
+      left: 0;
+      transform: translateX(0);
+    }
+    100% {
+      left: 100%;
+      transform: translateX(-100%);
+    }
+}
+
  @keyframes rotate-keyframes {
   from {
    transform: rotate(0deg);

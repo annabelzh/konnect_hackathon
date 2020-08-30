@@ -241,7 +241,8 @@ export default class Facebook extends Component {
                 fields="name,picture"
                 onClick={this.componentClicked}
             // callback={this.responseFacebook}
-            />);
+            />)
+            ;
 
         return (
             <>
