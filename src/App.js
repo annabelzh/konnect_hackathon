@@ -4,17 +4,16 @@ import wings from './Images/cancel_me_noew_wings.png';
 import './App.css';
 import './style.css';
 import Card from "./Card";
+import Modal from '@material-ui/core/Modal';
+import cleanwings from './Images/wings.png';
 
 import Button from '@material-ui/core/Button';
 import SearchBar from "material-ui-search-bar";
 import FacebookIcon from '@material-ui/icons/Facebook';
-// import LinkedInIcon from '@material-ui/icons/LinkedIn';
-// import RedditIcon from '@material-ui/icons/Reddit';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import CardList from './CardList';
-import Rotation from 'react-rotation';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
+import TwitterIcon from '@material-ui/icons/Twitter';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 import FacebookLogin from 'react-facebook-login';
@@ -28,7 +27,22 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-const useStyles = makeStyles({
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     maxWidth: 500,
@@ -37,16 +51,29 @@ const useStyles = makeStyles({
     // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     marginBottom: "20px"
   },
-});
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 var tweets = {};
 
 function App() {
   document.title = '#CancelMe!'
   const classes = useStyles();
+  // getModalStyle is not a pure function, we roll the style only on the first render
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+
   const [socialMediaOption, setSocialMediaOption] = React.useState(0);
   const [twitterCards, setTwitterCards] = useState({});
   const [cancelled, setCancelled] = useState(false);
   const [cancelRotate, setCancelRotate] = useState(false);
+  const [slide, setSlide] = useState(false);
   const [loading, setLoading] = useState(false);
   const [mapping, setMapping] = useState({});
   const [cards, setCards] = useState({1:{image:"https://pbs.twimg.com/media/EgkWveqUwAIj0uc?format=jpg&name=360x360", username:"kimkar", text:"abc", date:"2007-02-20T14:35:54.000Z"}, 2: {image:null, username:"kimkar", text:"efg", date:"2009-02-20T14:35:54.000Z"}});
@@ -54,6 +81,28 @@ function App() {
 
   useEffect(() => {
   }, []);
+
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+        <img src={cleanwings} className="wingButtonLogo" alt="logo" />
+      <h2 id="simple-modal-title">Congrats, you are now cancelled 👼🏻</h2>
+      {/* <p id="simple-modal-description">
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      </p> */}
+      {/* <SimpleModal /> */}
+    </div>
+  );
+
+
 
 
   const initCards = (keyword) => {
@@ -133,34 +182,50 @@ function App() {
     console.log(JSON.stringify(tweets));
   }
 
+  ///
+
+  
+
+
   const RotateButton = () => {
-    // if (cancelRotate === true) {
-    return (
-      <Button className="wingButton rotate"
-        onClick={() => { setTwitterCards({}); }}
-      >
-        <img src={wings} className="wingButtonLogo" alt="logo" />
-        <span class="tooltiptext">Click me to delete selected feeds</span>
+    if (cancelRotate === true) {
+      // setCancelRotate(false);
+      return (
+        <Button 
+        // className={"wingButton "}
+        className={"wingButton rotate"}
+          id="buttonWings"
+          onClick={() => { 
+            setTwitterCards({}); 
+            setCancelRotate(false);
+            setSlide(true);
+          }}
+        >
+          <img src={wings} className="wingButtonLogo" alt="logo" />
+          <span class="tooltiptext">Click me to delete selected feeds</span>
+
+        </Button>
+      )
+    } else {
+      return(
+      <Button className="wingButton"
+        onClick={() => {
+          setTwitterCards({}); 
+          setCancelRotate(true);
+          handleOpen();
+        }}
+        >
+        <img src={wings} className="wingButtonLogo" alt="logo" /> 
+        <span className="tooltiptext">Click me to delete selected feeds</span>
 
       </Button>
-    )
-    // } else {
-    //   return(
-    //   <Button className="wingButton"
-    //     onClick={() => {
-    //       alert('clicked')
-    //       setCancelRotate(true);
-    //     }}
-    //     >
-    //     <img src={wings} className="wingButtonLogo" alt="logo" /> 
-    //     <span className="tooltiptext">Click me to delete selected feeds</span>
-
-    //   </Button>
-    //   )
-    // }
+      )
     }
+  }
   const removeFromCardList = (id) => {
     console.log(id);
+    // var element = document.getElementsByClassName(classes.root);
+    // document.getElementById(id).className += " slide";
     let copy = twitterCards;
     delete copy[id]; 
     console.log(copy);
@@ -181,76 +246,33 @@ function App() {
       return (
         <div>
           <RotateButton />
-          { /*
-          Object.keys(cards).map(c => {
-            console.log("hi");
-            console.log(cards[c]);
-            return (<Card
-              inline
-              key={c}
-              allCards={cards}
-              deleteFeed={() => {
-                  console.log("delete from App");
-                  delete cards[c];
-                  console.log(cards);
-              }}
-              card={cards[c]}
-            />) 
-          }
-        ) */}
 
           { loading ? <CircularProgress /> : Object.keys(twitterCards).map(c => <Card 
             inline
+            id={c}
             key={c}
             card={twitterCards[c]}
             props={twitterCards}
             removeFromCardList = {removeFromCardList}
+
+            className={slide ? "slide " : ""}
           />)}
 
 
         </div>
       );
     }
-
-    const RenderCards = () => {
-        if (socialMediaOption === 0) {
-            return (<div></div>);
-
-        } else if (socialMediaOption === 1) {
-            return (
-                <div>
-                    <RotateButton />
-                    {/* {cards.map(c => <Card/>)} */}
-                    {cards.map(c => <Card
-                        text={c.text}
-                        removeFromCardList={() => {
-                            //hi
-                        }}
-                    />)}
-
-
-                </div>
-            );
-        }
-        return (
-            <div></div>
-        );
-    }
-
-    return (
-      <div></div>
-    );
   }
-  console.log("loading..? " + loading);
+
   return (
     <div className="App">
       <img src={logo} className="App-logo" alt="logo" />
 
       <div className="sub middle">Cancelling the Cancel Culture</div>
 
-      <div className="picksosmed">
+      {/* <div className="picksosmed">
         Pick your social media:
-      </div>
+      </div> */}
       <div className="middle">
 
         {/* <Paper className={classes.root}> */}
@@ -289,6 +311,17 @@ function App() {
           ></SearchBar>
         <br/>
       </div>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
+
+
       <div className="middle">
       {RenderCards()}
       </div>
